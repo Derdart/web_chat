@@ -7,20 +7,17 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="login-container" id="login-container">
-      <input id="username" type="text" placeholder="Enter your name" />
-      <select id="room-select">
-        <option value="General">General</option>
-        <option value="Sports">Sports</option>
-        <option value="Tech">Tech</option>
-      </select>
-      <button id="join-btn">Join Room</button>
-    </div>
+    <div id="app">
+      <h1>Join a Room</h1>
+      <input type="text" id="roomInput" placeholder="Enter room name" />
+      <button id="joinRoomButton">Join Room</button>
 
-    <div class="chat-container" id="chat-container" style="display: none">
-      <div id="messages" class="messages"></div>
-      <input id="message-input" type="text" placeholder="Type a message" />
-      <button id="send-btn">Send</button>
+      <h2>Room: <span id="roomName">None</span></h2>
+
+      <div id="messages"></div>
+
+      <input type="text" id="messageInput" placeholder="Type a message" />
+      <button id="sendButton">Send</button>
     </div>
 
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>

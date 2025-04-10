@@ -1,54 +1,34 @@
-// app.js
-const socket = io(
-  window.location.hostname === "localhost"
-    ? "http://localhost:3000"
-    : "https://web-chat-jade.vercel.app/"
-);
+const socket = io("http://localhost:3000"); // Connect to the server
 
-let username = "";
-let currentRoom = "";
+// Join room event
+document
+  .getElementById("joinRoomButton")
+  .addEventListener("click", function () {
+    const roomName = document.getElementById("roomInput").value;
 
-// Elements
-const loginContainer = document.getElementById("login-container");
-const chatContainer = document.getElementById("chat-container");
-const usernameInput = document.getElementById("username");
-const roomSelect = document.getElementById("room-select");
-const joinButton = document.getElementById("join-btn");
-const messageInput = document.getElementById("message-input");
-const sendButton = document.getElementById("send-btn");
-const messagesDiv = document.getElementById("messages");
+    if (roomName) {
+      socket.emit("joinRoom", roomName);
+      document.getElementById("roomName").textContent = roomName;
+      document.getElementById("roomInput").disabled = true;
+    }
+  });
 
-// Join Room
-joinButton.addEventListener("click", () => {
-  username = usernameInput.value;
-  currentRoom = roomSelect.value;
+// Send message event
+document.getElementById("sendButton").addEventListener("click", function () {
+  const message = document.getElementById("messageInput").value;
+  const roomName = document.getElementById("roomName").textContent;
 
-  if (username) {
-    socket.emit("set name", username); // Set the user's name
-    socket.emit("join room", currentRoom); // Join the selected room
-
-    loginContainer.style.display = "none";
-    chatContainer.style.display = "block";
-  } else {
-    alert("Please enter a username");
-  }
-});
-
-// Send Message
-sendButton.addEventListener("click", () => {
-  const message = messageInput.value;
   if (message) {
-    socket.emit("chat message", message); // Send message to server
-    messageInput.value = ""; // Clear input
+    socket.emit("sendMessage", { room: roomName, message });
+    document.getElementById("messageInput").value = ""; // Clear input
   }
 });
 
-// Display messages
-socket.on("chat message", (msg) => {
-  const messageElement = document.createElement("div");
-  messageElement.textContent = msg;
-  messagesDiv.appendChild(messageElement);
+// Listen for messages from the server
+socket.on("messageReceived", function (message) {
+  const messageContainer = document.getElementById("messages");
 
-  // Scroll to the bottom
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  const messageElement = document.createElement("div");
+  messageElement.textContent = message;
+  messageContainer.appendChild(messageElement);
 });
