@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Chat</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="login-container" id="login-container">
+      <input id="username" type="text" placeholder="Enter your name" />
+      <select id="room-select">
+        <option value="General">General</option>
+        <option value="Sports">Sports</option>
+        <option value="Tech">Tech</option>
+      </select>
+      <button id="join-btn">Join Room</button>
+    </div>
+
+    <div class="chat-container" id="chat-container" style="display: none">
+      <div id="messages" class="messages"></div>
+      <input id="message-input" type="text" placeholder="Type a message" />
+      <button id="send-btn">Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
