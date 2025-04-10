@@ -1,5 +1,9 @@
 // app.js
-const socket = io();
+const socket = io(
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000"
+    : "https://web-chat-jade.vercel.app"
+);
 
 let username = "";
 let currentRoom = "";
