@@ -2,7 +2,7 @@
 const socket = io(
   window.location.hostname === "localhost"
     ? "http://localhost:3000"
-    : "https://web-chat-jade.vercel.app"
+    : "https://web-chat-jade.vercel.app/"
 );
 
 let username = "";
